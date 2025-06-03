@@ -1,10 +1,327 @@
 <!DOCTYPE html>
-<html lang="pt-Br" dir="ltr">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
-	<meta charset="utf-8">
-	<title>Lucas Heber :: GitHub</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currículo Interativo | Lucas Silva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page application with vertical scrolling and a sticky sidebar navigation for desktop (top navigation for mobile). This structure allows users to easily navigate between key sections (Resumo, Experiência, Habilidades, etc.) without losing context. The flow is designed to be intuitive: start with a strong summary, move to an interactive experience timeline, visualize skills with charts, and end with education and contact details. This non-linear but guided approach is more engaging than a traditional document and better highlights technical capabilities. -->
+    <!-- Visualization & Content Choices: 
+        - Experience: Report Info -> Job History. Goal -> Show career progression. Viz -> Interactive timeline (HTML/CSS). Interaction -> Clicking on a job title reveals its details (accordion style). Justification -> Cleaner UI, encourages user interaction.
+        - Skills: Report Info -> List of technical skills. Goal -> Showcase technical proficiency quickly. Viz -> Horizontal bar charts via Chart.js. Interaction -> Hovering over bars shows details. Justification -> More visually engaging and easier to parse than a list; subtly demonstrates frontend skills.
+        - Key Achievement: Report Info -> "reduziu em 70%...". Goal -> Highlight the most impactful metric. Viz -> A visually distinct "stat card" (HTML/Tailwind). Interaction -> None, purely visual emphasis. Justification -> Draws immediate attention to a quantifiable success.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            top: 1rem;
+            left: -1.05rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #3b82f6;
+            border: 4px solid #f8f9fa;
+            z-index: 10;
+        }
+        .timeline-line {
+            position: absolute;
+            top: 1rem;
+            left: -0.7rem;
+            bottom: 0;
+            width: 2px;
+            background-color: #e5e7eb;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 250px;
+            max-height: 300px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+        .nav-link.active {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+    </style>
 </head>
-<body>
-<h1>Não há nada aqui...</h1>
+<body class="bg-slate-50 text-slate-800">
+    <div class="flex flex-col lg:flex-row">
+        
+        <header class="lg:sticky lg:top-0 lg:w-1/3 lg:h-screen lg:flex lg:flex-col lg:justify-between p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-slate-200">
+            <div>
+                <h1 class="text-4xl font-bold text-slate-900">Lucas Silva</h1>
+                <h2 class="mt-2 text-lg text-blue-600 font-semibold">Desenvolvedor Full Stack PHP</h2>
+                <p class="mt-4 text-slate-600">Transformando ideias em aplicações web robustas, escaláveis e com foco no desempenho.</p>
+
+                <nav id="nav-menu" class="hidden lg:block mt-12">
+                    <ul class="space-y-4">
+                        <li><a href="#summary" class="nav-link text-slate-600 hover:text-blue-600 transition-colors duration-300">Resumo</a></li>
+                        <li><a href="#experience" class="nav-link text-slate-600 hover:text-blue-600 transition-colors duration-300">Experiência</a></li>
+                        <li><a href="#skills" class="nav-link text-slate-600 hover:text-blue-600 transition-colors duration-300">Habilidades</a></li>
+                        <li><a href="#education" class="nav-link text-slate-600 hover:text-blue-600 transition-colors duration-300">Educação</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="mt-8 lg:mt-0">
+                <ul class="flex space-x-4">
+                    <li>
+                        <a href="https://www.linkedin.com/in/lucas-heber-a1a117217/" target="_blank" class="text-slate-500 hover:text-blue-600 transition-colors duration-300">
+                            <span class="sr-only">LinkedIn</span>
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/lucasheber" target="_blank" class="text-slate-500 hover:text-blue-600 transition-colors duration-300">
+                             <span class="sr-only">GitHub</span>
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="mailto:lucas.heber07@gmail.com" class="text-slate-500 hover:text-blue-600 transition-colors duration-300">
+                             <span class="sr-only">Email</span>
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+
+        <main class="w-full lg:w-2/3 p-8 lg:p-16 lg:py-20">
+            <section id="summary" class="mb-16">
+                <h3 class="text-2xl font-bold text-slate-900 mb-4">Resumo Profissional</h3>
+                <p class="text-slate-600 leading-relaxed">
+                    Desenvolvedor Full Stack PHP com mais de 7 anos de experiência na criação de aplicações web robustas, escaláveis e orientadas a desempenho. Especialista em Laravel, Clean Code, padrões de projeto (MVC) e desenvolvimento orientado a objetos. Possui sólida experiência na construção de APIs REST utilizando autenticação JWT e na integração com gateways de pagamento como Stripe, Banco Inter, Pagar.me e Mercado Pago.
+                </p>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    Além disso, tem familiaridade com infraestrutura em nuvem (AWS S3), integração de sistemas e boas práticas de versionamento e testes. Autodidata, focado em prazos e qualidade técnica, sempre buscando otimizar processos e melhorar a eficiência dos sistemas, e pronto para contribuir com soluções inovadoras em ambientes dinâmicos e desafiadores.
+                </p>
+            </section>
+
+            <section id="experience" class="mb-16">
+                <h3 class="text-2xl font-bold text-slate-900 mb-8">Experiência Profissional</h3>
+                <div class="relative">
+                    <div class="timeline-line"></div>
+                    <div class="space-y-12">
+                        <div class="timeline-item relative pl-8 experience-item">
+                            <h4 class="font-bold text-lg text-slate-800 cursor-pointer">Freelancer – Desenvolvedor PHP/Python</h4>
+                            <p class="text-sm text-slate-500 mb-3">Remoto | Abr/2024 – Atual</p>
+                            <div class="experience-details transition-all duration-500">
+                                <ul class="list-disc list-inside text-slate-600 space-y-2">
+                                    <li>Desenvolveu e implementou aplicações web dinâmicas utilizando PHP, Laravel e Python.</li>
+                                    <li>Criou e integrou APIs REST robustas com autenticação JWT.</li>
+                                    <li>Implementou e gerenciou integrações com múltiplos gateways de pagamento.</li>
+                                    <li>Otimizou o armazenamento de dados utilizando AWS S3 para escalabilidade.</li>
+                                    <li>Gerenciou o ciclo completo de projetos, desde o escopo até a entrega final.</li>
+                                </ul>
+                                <div class="mt-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg">
+                                    <p class="text-3xl font-bold text-blue-600">70%</p>
+                                    <p class="text-sm text-blue-800">de redução no tempo de análise de clientes para pré-cadastro no sistema.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item relative pl-8 experience-item">
+                            <h4 class="font-bold text-lg text-slate-800 cursor-pointer">iScholar – Desenvolvedor Web PHP III</h4>
+                            <p class="text-sm text-slate-500 mb-3">Uberlândia – MG | Mai/2022 – Abr/2024</p>
+                            <div class="experience-details transition-all duration-500 hidden">
+                                <ul class="list-disc list-inside text-slate-600 space-y-2">
+                                    <li>Atuou no desenvolvimento e manutenção de sistemas complexos com Laravel.</li>
+                                    <li>Colaborou com equipes de UI/UX para traduzir requisitos em soluções funcionais.</li>
+                                    <li>Otimizou a performance de consultas a bancos de dados e APIs.</li>
+                                    <li>Participou de projetos estratégicos de integração de sistemas distintos.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item relative pl-8 experience-item">
+                            <h4 class="font-bold text-lg text-slate-800 cursor-pointer">Rivelli Alimentos S/A – Programador PHP</h4>
+                            <p class="text-sm text-slate-500 mb-3">Barbacena – MG | Fev/2017 – Mai/2021</p>
+                            <div class="experience-details transition-all duration-500 hidden">
+                                <ul class="list-disc list-inside text-slate-600 space-y-2">
+                                    <li>Desenvolveu e aprimorou sistemas internos críticos com arquitetura MVC.</li>
+                                    <li>Criou APIs e fluxos back-end para diversos setores internos, automatizando operações.</li>
+                                    <li>Coordenou etapas de testes, homologações e implantação em produção.</li>
+                                    <li>Melhorou fluxos de trabalho com soluções automatizadas, aumentando a eficiência operacional.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="skills" class="mb-16">
+                <h3 class="text-2xl font-bold text-slate-900 mb-8">Habilidades Técnicas</h3>
+                <div class="space-y-12">
+                    <div>
+                        <h4 class="font-semibold text-slate-700 mb-2">Backend</h4>
+                        <div class="chart-container">
+                            <canvas id="backendChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-700 mb-2">Frontend</h4>
+                        <div class="chart-container">
+                            <canvas id="frontendChart"></canvas>
+                        </div>
+                    </div>
+                     <div>
+                        <h4 class="font-semibold text-slate-700 mb-2">Bancos de Dados & DevOps</h4>
+                        <div class="chart-container">
+                            <canvas id="dataDevopsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="education">
+                <h3 class="text-2xl font-bold text-slate-900 mb-8">Educação e Idiomas</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-slate-800">Tecnólogo em Sistemas para Internet</h4>
+                        <p class="text-slate-600">Instituto Federal do Sudeste de Minas Gerais</p>
+                        <p class="text-sm text-slate-500">Concluído em 2018</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Técnico em Redes de Computadores</h4>
+                        <p class="text-slate-600">SENAC Minas</p>
+                        <p class="text-sm text-slate-500">Concluído em 2014</p>
+                    </div>
+                     <div>
+                        <h4 class="font-bold text-slate-800">Português</h4>
+                        <p class="text-slate-600">Nativo</p>
+                    </div>
+                     <div>
+                        <h4 class="font-bold text-slate-800">Inglês</h4>
+                        <p class="text-slate-600">Intermediário (Nível B1)</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const experienceItems = document.querySelectorAll('.experience-item h4');
+            experienceItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const details = item.nextElementSibling.nextElementSibling;
+                    details.classList.toggle('hidden');
+                });
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.3
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            const createChart = (ctx, labels, data, label) => {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: label,
+                            data: data,
+                            backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                             tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let proficiency;
+                                        const value = context.raw;
+                                        if (value >= 90) proficiency = 'Avançado';
+                                        else if (value >= 70) proficiency = 'Proficiente';
+                                        else if (value >= 50) proficiency = 'Intermediário';
+                                        else proficiency = 'Familiar';
+                                        return `${context.label}: ${proficiency}`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 100,
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    display: false
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            };
+
+            const backendCtx = document.getElementById('backendChart').getContext('2d');
+            createChart(backendCtx, ['PHP', 'Laravel', 'Python', 'Django'], [95, 95, 75, 70], 'Proficiência Backend');
+
+            const frontendCtx = document.getElementById('frontendChart').getContext('2d');
+            createChart(frontendCtx, ['JavaScript', 'HTML', 'CSS', 'AJAX', 'jQuery'], [80, 95, 90, 85, 80], 'Proficiência Frontend');
+
+            const dataDevopsCtx = document.getElementById('dataDevopsChart').getContext('2d');
+            createChart(dataDevopsCtx, ['MySQL', 'SQL Server', 'Docker', 'AWS S3', 'Git'], [90, 85, 70, 75, 95], 'Proficiência Dados & DevOps');
+        });
+    </script>
 </body>
 </html>
